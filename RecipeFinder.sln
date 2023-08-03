@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeFinder.API", "RecipeFinder\RecipeFinder.API.csproj", "{2FFB2C89-26E6-418B-8C2A-157966E151BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeFinder.BL", "RecipeFinder.BL\RecipeFinder.BL.csproj", "{CBA21D77-8C88-4D29-9A01-F610D5CCFC80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeFinder.DAL", "RecipeFinder.DAL\RecipeFinder.DAL.csproj", "{9ECB6319-B021-4972-9747-AC4B661E637C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeFinder.Common", "RecipeFinder.Commons\RecipeFinder.Common.csproj", "{80E02396-CCEA-42E9-8CE4-F27FEC1961A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FFB2C89-26E6-418B-8C2A-157966E151BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFB2C89-26E6-418B-8C2A-157966E151BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFB2C89-26E6-418B-8C2A-157966E151BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFB2C89-26E6-418B-8C2A-157966E151BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA21D77-8C88-4D29-9A01-F610D5CCFC80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA21D77-8C88-4D29-9A01-F610D5CCFC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA21D77-8C88-4D29-9A01-F610D5CCFC80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA21D77-8C88-4D29-9A01-F610D5CCFC80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ECB6319-B021-4972-9747-AC4B661E637C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ECB6319-B021-4972-9747-AC4B661E637C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ECB6319-B021-4972-9747-AC4B661E637C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ECB6319-B021-4972-9747-AC4B661E637C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E02396-CCEA-42E9-8CE4-F27FEC1961A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E02396-CCEA-42E9-8CE4-F27FEC1961A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E02396-CCEA-42E9-8CE4-F27FEC1961A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E02396-CCEA-42E9-8CE4-F27FEC1961A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A77727A2-ECAF-4EC0-A623-FBD239E43B6A}
+	EndGlobalSection
+EndGlobal
