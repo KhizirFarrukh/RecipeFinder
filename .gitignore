@@ -1,0 +1,29 @@
+# ASP.NET Core / ASP.NET Web API
+
+# Build output
+bin/
+obj/
+
+# Local development settings
+appsettings.Development.json
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# NuGet Package Management
+/.nuget/
+*.nupkg
+
+# Node.js / npm
+node_modules/
+
+# TypeScript / tsconfig.json
+tsconfig.json
+*.tsbuildinfo
+
+# macOS / Linux specific files
+.DS_Store
+Thumbs.db
