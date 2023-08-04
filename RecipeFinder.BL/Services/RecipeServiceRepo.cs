@@ -23,13 +23,13 @@ namespace RecipeFinder.BL.Services
         {
             foreach(var recipe in recipesDTO)
             {
-                string ingredientsJson = JsonSerializer.Serialize(recipe.Ingredients);
-                string keywordsJson = JsonSerializer.Serialize(recipe.Keywords);
+                string ingredientsJson = JsonSerializer.Serialize(recipe.ingredients);
+                string keywordsJson = JsonSerializer.Serialize(recipe.keywords);
 
                 _context.Recipes.Add(new Recipe
                 {
-                    Title = recipe.Title,
-                    Instructions = recipe.Instructions,
+                    Title = recipe.title,
+                    Instructions = recipe.instructions,
                     IngredientsJson = ingredientsJson,
                     KeywordsJson = keywordsJson
                 });

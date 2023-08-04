@@ -9,10 +9,9 @@ namespace RecipeFinder.BL.DTOs.Recipe
 {
     public class AddRecipeDTO
     {
-        public string Title { get; set; }
-        public string Instructions { get; set; }
-        public List<string> Ingredients { get; set; }
-        [JsonIgnore]
-        public List<string> Keywords { get; set; }
+        public string title { get; set; }
+        public string instructions { get; set; }
+        public List<string> ingredients { get; set; }
+        public List<string> keywords { get; set; }
     }
 }

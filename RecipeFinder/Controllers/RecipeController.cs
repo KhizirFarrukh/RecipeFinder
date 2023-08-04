@@ -18,60 +18,62 @@ namespace RecipeFinder.API.Controllers
             _recipeRepo = recipeRepo;
         }
 
-        [HttpPost("AddRecipes")]
-        public IActionResult AddRecipes(IFormFile file)
+        [HttpGet("AddRecipesFromJson")]
+        public IActionResult AddRecipesFromJson(string filename)
         {
             try
             {
-                if (file == null || file.Length == 0)
+                string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "JSON_files", filename);
+                string jsonContent = System.IO.File.ReadAllText(jsonFilePath);
+
+                var recipeData = JsonSerializer.Deserialize<List<AddRecipeDTO>>(jsonContent);
+                
+                if (recipeData == null)
                 {
-                    return Ok(new JSONResponse { Status = ResponseMessage.FAILURE, Message = string.Format(CustomMessage.NOT_UPLOADED, "File") });
+                    return Ok(new JSONResponse { Status = ResponseMessage.FAILURE, Message = string.Format(CustomMessage.ERROR_JSON_DESERIALIZING, "Recipes") });
                 }
-                using (var reader = new StreamReader(file.OpenReadStream()))
+                
+                List<string> unwantedWords = new List<string>
                 {
-                    string jsonContent = reader.ReadToEnd();
-                    var recipeData = JsonSerializer.Deserialize<Dictionary<string, AddRecipeDTO>>(jsonContent);
+                    "advertisement", "small", "cup", "cans", "ounce", "torn", "into", "pieces", ",", "finely", "diced", "skinless", "boneless",
+                    "tablespoons", "packages", "refrigerated", "pounds", "pack", "packed", "teaspoons", "teaspoon", "tablespoon", "small", "crushed", "softened",
+                    "medium", "cloves", "minced", "divided"
+                    // Add other unwanted words here
+                };
 
-                    if(recipeData == null)
+                var recipes = new List<AddRecipeDTO>();
+
+                foreach (var recipe_kvp in recipeData)
+                {
+                    //var keywords = recipe_kvp.ingredients.Select(ingredient =>
+                    //    Regex.Replace(ingredient, @"\b\d+(\.\d+)?(/\d+)?\b|\(|\)", "",
+                    //        RegexOptions.IgnoreCase).Trim())
+                    //    .ToList();
+
+                    var keywords = recipe_kvp.ingredients.Select(ingredient =>
                     {
-                        return Ok(new JSONResponse { Status = ResponseMessage.FAILURE, Message = string.Format(CustomMessage.ERROR_JSON_DESERIALIZING, "Recipes") });
-                    }
-
-                    List<string> unwantedWords = new List<string>
-                    {
-                        "advertisement", "small", "cup", "cans", "(", ")", "ounce", "torn", "into", "pieces", ",", "finely", "diced", "skinless", "boneless",
-                        "tablespoons", "packages", "refrigerated", "pounds", "pack", "packed", "teaspoons", "teaspoon", "tablespoon", "small", "crushed", "softened",
-                        "medium", "cloves", "minced", "divided"
-                        // Add other unwanted words here
-                    };
-
-                    foreach (var recipe_kvp in recipeData)
-                    {
-                        //var keywords = recipe_kvp.Value.Ingredients.Select(ingredient =>
-                        //    unwantedWords.Aggregate(System.Text.RegularExpressions.Regex.Replace(ingredient, @"\b\d+(\.\d+)?(/\d+)?\b", ""),
-                        //    (current, word) => current.Replace(word, string.Empty, StringComparison.OrdinalIgnoreCase).Trim()))
-                        //    .ToList();
-
-                        var keywords = recipe_kvp.Value.Ingredients.Select(ingredient =>
-                            unwantedWords.Aggregate(Regex.Replace(ingredient, @"\b\d+(\.\d+)?(/\d+)?\b", ""),
-                                (current, word) => Regex.Replace(current, word, "", RegexOptions.IgnoreCase).Trim()))
-                            .ToList();
-
-                        var recipe = new AddRecipeDTO
+                        foreach (var word in unwantedWords)
                         {
-                            Title = recipe_kvp.Value.Title,
-                            Instructions = recipe_kvp.Value.Instructions,
-                            Ingredients = recipe_kvp.Value.Ingredients,
-                            Keywords = keywords
-                        };
-                    }
+                            ingredient = ingredient.Replace(word,"",StringComparison.OrdinalIgnoreCase);
+                            ingredient = Regex.Replace(ingredient, @"\([^)]*\)|\d+", "").Trim();
+                        }
+                        return ingredient;
+                    })
+                    .Where(ingredient => !string.IsNullOrEmpty(ingredient))
+                    .ToList();
 
-                    var recipes = new List<AddRecipeDTO>();
-
-                    _recipeRepo.AddRecipes(recipes);
-
-                    return Ok(new JSONResponse { Status = ResponseMessage.SUCCESS, Message = string.Format(CustomMessage.ADDED_SUCCESSFULLY, "Recipes") });
+                    recipes.Add(new AddRecipeDTO
+                    {
+                        title = recipe_kvp.title,
+                        instructions = recipe_kvp.instructions,
+                        ingredients = recipe_kvp.ingredients,
+                        keywords = keywords
+                    });
                 }
+
+                _recipeRepo.AddRecipes(recipes);
+
+                return Ok(new JSONResponse { Status = ResponseMessage.SUCCESS, Message = string.Format(CustomMessage.ADDED_SUCCESSFULLY, "Recipes") });
             }
             catch (Exception ex)
             {

@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using RecipeFinder.BL.ServiceInterfaces;
+using RecipeFinder.BL.Services;
+using RecipeFinder.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IRecipeServiceRepo, RecipeServiceRepo>();
+
+//builder.Services.Configure<IISServerOptions>(options =>
+//{
+//    options.MaxRequestBodySize = 1048576000; // 100 MB (in bytes)
+//});
+
+var connectionString = builder.Configuration.GetConnectionString("cs");
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
