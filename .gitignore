@@ -27,3 +27,7 @@ tsconfig.json
 # macOS / Linux specific files
 .DS_Store
 Thumbs.db
+*.py
+RecipeFinder/JSON_files/recipes_raw_nosource_ar.json
+RecipeFinder/JSON_files/recipes_raw_nosource_fn.json
+RecipeFinder/JSON_files/recipes_raw_nosource_epi.json
